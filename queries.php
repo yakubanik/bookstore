@@ -28,3 +28,18 @@ function isUserExists(PDO $pdo, string $username): bool
     $statement->execute(['name' => $username]);
     return boolval($statement->fetch(PDO::FETCH_ASSOC));
 }
+
+function create_user(PDO $pdo, string $username, string $password): void
+{
+    $query = "INSERT INTO customers(name, password) VALUES (:username, :password)";
+    $statement = $pdo->prepare($query);
+    try {
+        $statement->execute([
+            'username' => $username,
+            'password' => $password
+        ]);
+    } catch (PDOException $e) {
+        echo "User creation is failed" . $e;
+        die();
+    }
+}
