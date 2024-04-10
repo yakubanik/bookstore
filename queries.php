@@ -43,3 +43,14 @@ function create_user(PDO $pdo, string $username, string $password): void
         die();
     }
 }
+
+function getUser(PDO $pdo, string $username)
+{
+    if (isUserExists($pdo, $username)) {
+        $query = "SELECT name, password FROM customers WHERE name = :username";
+        $statement = $pdo->prepare($query);
+        $statement->execute(['username' => $username]);
+        return $statement->fetch(PDO::FETCH_ASSOC);
+    }
+    return null;
+}
