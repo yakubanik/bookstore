@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once 'queries.php';
 require_once 'db_connect.php';
 
@@ -16,6 +17,14 @@ $books = getBooks($pdo);
     <title>All books</title>
 </head>
 <body>
+<?php
+if (isset($_SESSION['current_user'])) {
+    echo "<p>Hello, " . $_SESSION['current_user'] . "</p>";
+    echo "<a href='logout.php'>logout</a>";
+} else {
+    echo "<a href='login.php'>login</a> | <a href='registration.php'>registration</a>";
+}
+?>
 <table>
     <thead>
     <tr>
