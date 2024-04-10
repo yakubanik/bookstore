@@ -8,6 +8,13 @@ function getBooks(PDO $pdo): false|PDOStatement
 function getBookByID(PDO $pdo, int $id)
 {
     $query = "SELECT * FROM book WHERE id = $id";
-    return $pdo->query($query)->fetch();
+    $book = $pdo->query($query)->fetch(PDO::FETCH_ASSOC);
+    if (!$book) {
+        $book = [
+            'title' => "Book doesn't exist",
+            'author' => "",
+            'price' => ""
+        ];
+    }
+    return $book;
 }
-
