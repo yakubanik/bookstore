@@ -102,3 +102,18 @@ function getUserIdByName(PDO $pdo, string $username)
     $statement->execute(['name' => $username]);
     return $statement->fetch(PDO::FETCH_ASSOC);
 }
+
+function updateBook(PDO $pdo, int $id, string $title, string $author, float $price)
+{
+    $query =
+        "UPDATE book 
+        SET title = :title, author = :author, price = :price
+        WHERE id = :id;";
+    $statement = $pdo->prepare($query);
+    $statement->execute([
+        'id' => $id,
+        'title' => $title,
+        'author' => $author,
+        'price' => $price
+    ]);
+}
