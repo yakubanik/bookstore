@@ -10,7 +10,11 @@ $user = getUser(connect(), $username);
 
 if ($user and $user['password'] == $password) {
     $_SESSION['current_user'] = $username;
-    header('Location: index.php');
+    if ($username == 'admin') {
+        header('Location: admin/admin_page.php');
+    } else {
+        header('Location: index.php');
+    }
 } else {
     $_SESSION['message'] = 'Invalid username and/or password';
     header('Location: login.php');
